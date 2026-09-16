@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InvoX AI — AI-Powered Invoice Intelligence</title>
+  <meta name="description" content="Upload invoices and let InvoX AI extract, organize, search and answer questions about them." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="nav" id="top">
+    <div class="nav__inner">
+      <a href="#top" class="nav__brand">
+        <span class="nav__brand-mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="2" width="14" height="20" rx="2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M7 8h6M7 12h6M7 16h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        InvoX<span class="accent">AI</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav__links" id="navLinks">
+        <a href="#top" class="nav__link">Home</a>
+        <a href="#features" class="nav__link">Features</a>
+        <a href="#how" class="nav__link">How It Works</a>
+        <a href="login.html" class="nav__link">Login</a>
+        <a href="signup.html" class="nav__link nav__link--cta">Sign Up</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero__glow hero__glow--one" aria-hidden="true"></div>
+      <div class="hero__glow hero__glow--two" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <h1 class="hero__title">
+          Invo<span class="accent">X</span> AI
+        </h1>
+        <p class="hero__subtitle">AI-powered invoice intelligence</p>
+
+        <p class="hero__tagline">Upload. Extract. Organize. Search. Ask.</p>
+
+        <p class="hero__desc">
+          Drop in an invoice and InvoX AI reads it, structures it, stores it,
+          and lets you search or ask questions across every invoice you've ever uploaded.
+        </p>
+
+        <div class="hero__cta">
+          <a href="login.html" class="btn btn--primary" id="getStartedBtn">Get Started</a>
+          <a href="#how" class="btn btn--ghost" id="learnMoreBtn">Learn More</a>
+        </div>
+      </div>
+
+      <!-- ============ FEATURE STRIP ============ -->
+      <div class="feature-strip" id="features">
+        <div class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="1.5"/><path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+          <h3>AI Extraction</h3>
+          <p>Reads PDFs and scanned images alike</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="6" rx="8" ry="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6" stroke="currentColor" stroke-width="1.5"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" stroke="currentColor" stroke-width="1.5"/></svg>
+          </span>
+          <h3>Structured Storage</h3>
+          <p>Every field, organized and saved</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M14.5 14.5L20 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+          <h3>Smart Search</h3>
+          <p>Find invoices by meaning, not just text</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 4.4L18 9l-4.2 1.6L12 15l-1.8-4.4L6 9l4.2-1.6L12 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+          </span>
+          <h3>AI Assistant</h3>
+          <p>Ask questions, get answers</p>
+        </div>
+      </div>
+
+      <a href="#how" class="scroll-cue" aria-label="Scroll to learn more">
+        <span></span>
+        Scroll to explore
+      </a>
+    </section>
+
+    <!-- ============ HOW IT WORKS / ABOUT ============ -->
+    <section class="how" id="how">
+      <div class="how__inner">
+        <h2 class="section-title">What InvoX AI does</h2>
+        <p class="section-lead">
+          Three steps stand between a pile of invoices and answers you can actually use.
+        </p>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step__index">1</span>
+            <div>
+              <h3>Upload</h3>
+              <p>Add an invoice as a PDF or a photo — no formatting or cleanup required.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__index">2</span>
+            <div>
+              <h3>Extract &amp; understand</h3>
+              <p>InvoX AI reads the document and pulls out vendor details, line items, tax and totals into structured data.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__index">3</span>
+            <div>
+              <h3>Search &amp; ask</h3>
+              <p>Every invoice becomes searchable, and you can ask plain-language questions across your whole invoice history.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <p>&copy; 2026 InvoX AI. Built With love.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
