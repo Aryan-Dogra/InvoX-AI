@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login — InvoX AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body class="auth-page">
+
+    <!-- MAIN -->
+    <main class="auth-main">
+
+        <div class="glow glow-left"></div>
+        <div class="glow glow-bottom"></div>
+
+        <div class="auth-card">
+
+            <!-- LOGIN FORM -->
+            <div class="auth-content">
+
+                <div class="auth-heading">
+
+                    <h1>
+                        Welcome <span>Back</span>
+                    </h1>
+
+                    <p>
+                        Sign in to your InvoX AI account to continue.
+                    </p>
+
+                </div>
+
+
+                <form id="loginForm">
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <svg class="input-icon"
+                                 viewBox="0 0 24 24"
+                                 fill="none">
+
+                                <rect x="3" y="5"
+                                      width="18"
+                                      height="14"
+                                      rx="2"
+                                      stroke="currentColor"
+                                      stroke-width="1.8"/>
+
+                                <path d="M3 7L12 13L21 7"
+                                      stroke="currentColor"
+                                      stroke-width="1.8"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+
+                            </svg>
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="you@example.com"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div class="form-group">
+
+                        <div class="label-row">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <a href="#" class="forgot">
+                                Forgot password?
+                            </a>
+
+                        </div>
+
+
+                        <div class="input-wrapper">
+
+                            <svg class="input-icon"
+                                 viewBox="0 0 24 24"
+                                 fill="none">
+
+                                <rect x="5" y="10"
+                                      width="14"
+                                      height="10"
+                                      rx="2"
+                                      stroke="currentColor"
+                                      stroke-width="1.8"/>
+
+                                <path d="M8 10V7
+                                         C8 4.8 9.8 3 12 3
+                                         C14.2 3 16 4.8 16 7V10"
+                                      stroke="currentColor"
+                                      stroke-width="1.8"
+                                      stroke-linecap="round"/>
+
+                                <circle cx="12"
+                                        cy="15"
+                                        r="1"
+                                        fill="currentColor"/>
+
+                            </svg>
+
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Enter your password"
+                                required
+                            >
+
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="togglePassword"
+                            >
+
+                                <svg viewBox="0 0 24 24"
+                                     fill="none">
+
+                                    <path d="M2 12
+                                             C5 7 8 5
+                                             12 5
+                                             C16 5 19 7
+                                             22 12
+                                             C19 17 16 19
+                                             12 19
+                                             C8 19 5 17 2 12Z"
+                                          stroke="currentColor"
+                                          stroke-width="1.8"/>
+
+                                    <circle cx="12"
+                                            cy="12"
+                                            r="3"
+                                            stroke="currentColor"
+                                            stroke-width="1.8"/>
+
+                                </svg>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+                    <button type="submit" class="auth-button">
+                        Sign In
+                    </button>
+
+                </form>
+
+
+                <!-- DIVIDER -->
+                <div class="divider">
+                    <span></span>
+                    <p>OR</p>
+                    <span></span>
+                </div>
+
+
+                <!-- SIGN UP -->
+                <p class="switch-text">
+                    Don't have an account?
+                    <a href="signup.html">Sign Up</a>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <p class="auth-footer">
+            AI-powered invoice intelligence
+        </p>
+
+    </main>
+
+
+    <script src="js/auth.js"></script>
+
+</body>
+</html>

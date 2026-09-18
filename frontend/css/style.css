@@ -1,6 +1,8 @@
+/* =========================================================
+   InvoX AI — Landing Page Styles
+   ========================================================= */
 
 :root {
-  /* Color */
   --bg: #05070d;
   --bg-elevated: #0b0f1a;
   --border: #1c2333;
@@ -135,32 +137,30 @@ button:focus-visible {
   border-radius: 2px;
 }
 
-/* =========================================================
-   Hero
-   ========================================================= */
-
 .hero {
-  position: relative;
-  padding: calc(var(--nav-height) + 96px) 24px 64px;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 18% 15%, rgba(47, 143, 255, 0.07), transparent 45%),
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: auto, 64px 64px, 64px 64px;
-  background-position: 0 0, -1px -1px, -1px -1px;
+  background: var(--bg);
+  padding-bottom: 64px;
 }
 
-.hero::after {
-  /* fade the grid pattern toward the edges so it reads as texture, not wallpaper */
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 30%, transparent 0%, var(--bg) 78%);
-  pointer-events: none;
+.hero__media {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  padding: calc(var(--nav-height) + 96px) 24px 72px;
+  background-image:
+    linear-gradient(180deg, rgba(5, 7, 13, 0.55) 0%, rgba(5, 7, 13, 0.72) 55%, var(--bg) 100%),
+    radial-gradient(circle at 15% 20%, rgba(47, 143, 255, 0.18), transparent 55%),
+    url('../assets/hero-bg.png');
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
 }
 
 .hero__glow {
@@ -262,9 +262,6 @@ button:focus-visible {
 
 .btn--ghost:hover { border-color: var(--accent-soft); }
 
-/* =========================================================
-   Feature strip
-   ========================================================= */
 
 .feature-strip {
   position: relative;
@@ -306,10 +303,6 @@ button:focus-visible {
   color: var(--text-muted);
 }
 
-/* =========================================================
-   Scroll cue
-   ========================================================= */
-
 .scroll-cue {
   position: relative;
   z-index: 1;
@@ -330,10 +323,7 @@ button:focus-visible {
   transform: rotate(45deg);
   animation: bob 1.8s ease-in-out infinite;
 }
-
-/* =========================================================
-   How it works
-   ========================================================= */
+ 
 
 .how {
   padding: 96px 24px;
@@ -397,10 +387,6 @@ button:focus-visible {
   font-size: 0.95rem;
 }
 
-/* =========================================================
-   Footer
-   ========================================================= */
-
 .footer {
   padding: 28px 24px;
   text-align: center;
@@ -408,10 +394,6 @@ button:focus-visible {
   color: var(--text-muted);
   font-size: 0.85rem;
 }
-
-/* =========================================================
-   Motion
-   ========================================================= */
 
 @keyframes rise {
   from { opacity: 0; transform: translateY(14px); }
@@ -429,10 +411,6 @@ button:focus-visible {
     animation: none !important;
   }
 }
-
-/* =========================================================
-   Responsive
-   ========================================================= */
 
 @media (max-width: 860px) {
   .feature-strip { grid-template-columns: repeat(2, 1fr); }

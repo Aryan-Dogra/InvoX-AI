@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvoX AI — Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html" aria-label="InvoX AI home">
+            <span class="brand-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <rect x="5" y="3" width="14" height="18" rx="2"></rect>
+                    <path d="M9 8h6M9 12h6M9 16h3"></path>
+                </svg>
+            </span>
+            <span>InvoX <b>AI</b></span>
+        </a>
+
+        <nav class="nav-links" aria-label="Dashboard navigation">
+            <a class="active" href="dashboard.html">Dashboard</a>
+            <a href="#recent-invoices">Invoices</a>
+            <a href="#assistant">Help</a>
+        </nav>
+
+        <div class="user-area">
+            <div class="avatar">U</div>
+            <span class="user-name">User</span>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <section class="welcome-row">
+            <div class="welcome">
+                <p class="eyebrow">Welcome back,</p>
+                <h1>Manage your invoices<br><span>with AI.</span></h1>
+                <p class="welcome-text">
+                    Upload, extract, organize, search and ask questions
+                    about your invoices — all in one place.
+                </p>
+            </div>
+
+            <div class="stats-grid">
+                <article class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <rect x="6" y="3" width="12" height="18" rx="2"></rect>
+                            <path d="M9 8h6M9 12h6M9 16h3"></path>
+                        </svg>
+                    </div>
+                    <p>Total Invoices</p>
+                    <strong>24</strong>
+                    <span class="trend">↑ 12%</span>
+                    <small>vs last month</small>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M5 19V10M12 19V5M19 19v-7"></path>
+                        </svg>
+                    </div>
+                    <p>This Month</p>
+                    <strong>8</strong>
+                    <span class="trend">↑ 14%</span>
+                    <small>vs last month</small>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon">₹</div>
+                    <p>Total Amount</p>
+                    <strong>₹1,24,500</strong>
+                    <span class="trend">↑ 18%</span>
+                    <small>vs last month</small>
+                </article>
+            </div>
+        </section>
+
+        <section class="action-grid">
+            <article class="panel upload-panel">
+                <div class="drop-zone" id="dropZone">
+                    <div class="upload-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M12 16V4M8 8l4-4 4 4"></path>
+                            <path d="M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"></path>
+                        </svg>
+                    </div>
+
+                    <div>
+                        <h2>Upload your invoice</h2>
+                        <p>Drag and drop your file here, or click to browse</p>
+                        <div class="file-types">
+                            <span>PDF</span>
+                            <span>PNG</span>
+                            <span>JPG</span>
+                            <span>JPEG</span>
+                        </div>
+                    </div>
+
+                    <input type="file" id="invoiceFile" accept=".pdf,.png,.jpg,.jpeg" hidden>
+                    <button class="primary-btn" id="uploadBtn" type="button">
+                        <span>＋</span> Upload Invoice
+                    </button>
+                </div>
+                <p class="selected-file" id="selectedFile"></p>
+            </article>
+
+            <article class="panel search-panel">
+                <div class="panel-heading">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <circle cx="10.5" cy="10.5" r="6.5"></circle>
+                        <path d="m16 16 5 5"></path>
+                    </svg>
+                    <h2>Search your invoices</h2>
+                </div>
+
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <circle cx="10.5" cy="10.5" r="6.5"></circle>
+                        <path d="m16 16 5 5"></path>
+                    </svg>
+                    <input id="searchInput" type="search"
+                           placeholder="Search by vendor, invoice number, amount..."
+                           autocomplete="off">
+                    <button id="searchBtn" type="button">Search</button>
+                </div>
+
+                <p class="try-label">Try searching:</p>
+                <div class="suggestions">
+                    <button type="button" class="suggestion">Invoices from Amazon</button>
+                    <button type="button" class="suggestion">Amount above ₹10,000</button>
+                    <button type="button" class="suggestion">Last month invoices</button>
+                    <button type="button" class="suggestion">Software subscriptions</button>
+                </div>
+            </article>
+        </section>
+
+        <section class="lower-grid">
+            <article class="panel invoices-panel" id="recent-invoices">
+                <div class="section-heading">
+                    <div>
+                        <span class="section-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <rect x="6" y="3" width="12" height="18" rx="2"></rect>
+                                <path d="M9 8h6M9 12h6M9 16h3"></path>
+                            </svg>
+                        </span>
+                        <h2>Recent Invoices</h2>
+                    </div>
+                    <button class="view-all" type="button" id="viewAllBtn">View All →</button>
+                </div>
+
+                <div class="table-wrap">
+                    <table id="invoiceTable">
+                        <thead>
+                            <tr>
+                                <th>INVOICE #</th>
+                                <th>VENDOR</th>
+                                <th>DATE</th>
+                                <th>AMOUNT</th>
+                                <th>STATUS</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INV-1024</td>
+                                <td>Amazon</td>
+                                <td>18 Sep 2026</td>
+                                <td>₹12,500</td>
+                                <td><span class="status processed">● Processed</span></td>
+                                <td><button class="more-btn">•••</button></td>
+                            </tr>
+                            <tr>
+                                <td>INV-1023</td>
+                                <td>Microsoft</td>
+                                <td>16 Sep 2026</td>
+                                <td>₹8,200</td>
+                                <td><span class="status processed">● Processed</span></td>
+                                <td><button class="more-btn">•••</button></td>
+                            </tr>
+                            <tr>
+                                <td>INV-1022</td>
+                                <td>Dell Technologies</td>
+                                <td>14 Sep 2026</td>
+                                <td>₹25,000</td>
+                                <td><span class="status processed">● Processed</span></td>
+                                <td><button class="more-btn">•••</button></td>
+                            </tr>
+                            <tr>
+                                <td>INV-1021</td>
+                                <td>Google</td>
+                                <td>12 Sep 2026</td>
+                                <td>₹5,600</td>
+                                <td><span class="status processing">● Processing</span></td>
+                                <td><button class="more-btn">•••</button></td>
+                            </tr>
+                            <tr>
+                                <td>INV-1020</td>
+                                <td>Adobe</td>
+                                <td>10 Sep 2026</td>
+                                <td>₹18,300</td>
+                                <td><span class="status processed">● Processed</span></td>
+                                <td><button class="more-btn">•••</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="empty-state" id="emptyState">No matching invoices found.</p>
+            </article>
+
+            <aside class="panel assistant-panel" id="assistant">
+                <div class="assistant-title">
+                    <span class="sparkle">✦</span>
+                    <div>
+                        <h2>InvoX AI Assistant <small>Beta</small></h2>
+                        <p>Ask anything about your invoices</p>
+                    </div>
+                </div>
+
+                <div class="quick-questions">
+                    <button type="button">What did I spend the most on? <span>→</span></button>
+                    <button type="button">Show invoices from last month <span>→</span></button>
+                    <button type="button">Summarize my monthly expenses <span>→</span></button>
+                    <button type="button">Find invoices above ₹10,000 <span>→</span></button>
+                </div>
+
+                <div class="assistant-input">
+                    <input id="assistantInput" type="text" placeholder="Type your question...">
+                    <button id="assistantSend" type="button" aria-label="Send question">➤</button>
+                </div>
+
+                <p class="assistant-note">ⓘ AI responses will be powered by Microsoft Foundry</p>
+            </aside>
+        </section>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
