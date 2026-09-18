@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Invoice Details | InvoX AI</title>
+
+    <link rel="stylesheet" href="css/invoice.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <a href="dashboard.html" class="logo">
+            <div class="logo-icon">
+                <span>▤</span>
+            </div>
+
+            <span>InvoX <b>AI</b></span>
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="dashboard.html">
+                Invoices
+            </a>
+
+            <a href="#">
+                Help
+            </a>
+
+        </div>
+
+
+        <div class="nav-right">
+
+            <div class="user-profile">
+
+                <div class="avatar">
+                    A
+                </div>
+
+                <span class="user-name">
+                    User
+                </span>
+
+            </div>
+
+
+            <button
+                class="logout-btn"
+                id="logoutBtn"
+                type="button"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="invoice-page">
+
+        <!-- Back -->
+        <a
+            href="dashboard.html"
+            class="back-link"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <section class="invoice-header">
+
+            <div>
+
+                <p class="page-label">
+                    INVOICE
+                </p>
+
+                <h1>
+                    Invoice Details
+                </h1>
+
+                <p class="page-description">
+                    View invoice information, document and processing details.
+                </p>
+
+            </div>
+
+
+            <div
+                class="status-badge"
+                id="statusBadge"
+            >
+                <span class="status-dot"></span>
+                <span id="statusText">
+                    Loading...
+                </span>
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LOADING
+        ================================================== -->
+
+        <div
+            class="loading-state"
+            id="loadingState"
+        >
+            <div class="loader"></div>
+
+            <p>
+                Loading invoice...
+            </p>
+        </div>
+
+
+        <!-- =================================================
+             ERROR
+        ================================================== -->
+
+        <div
+            class="error-state"
+            id="errorState"
+        >
+            <div class="error-icon">
+                !
+            </div>
+
+            <h2>
+                Unable to load invoice
+            </h2>
+
+            <p id="errorMessage">
+                Something went wrong.
+            </p>
+
+            <a
+                href="dashboard.html"
+                class="primary-btn"
+            >
+                Back to Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             INVOICE CONTENT
+        ================================================== -->
+
+        <div
+            class="invoice-content"
+            id="invoiceContent"
+        >
+
+            <!-- =================================================
+                 TOP INFORMATION
+            ================================================== -->
+
+            <div class="invoice-title-row">
+
+                <div>
+
+                    <h2 id="invoiceNumber">
+                        INV-0000
+                    </h2>
+
+                    <p>
+                        Uploaded on
+                        <span id="uploadedDate">
+                            -
+                        </span>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 DOCUMENT + INFORMATION
+            ================================================== -->
+
+            <div class="top-grid">
+
+
+                <!-- =============================================
+                     DOCUMENT PREVIEW
+                ============================================== -->
+
+                <section class="card preview-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <h3>
+                                Invoice Preview
+                            </h3>
+
+                            <p id="fileName">
+                                -
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Tabs -->
+
+                    <div class="preview-tabs">
+
+                        <button
+                            class="preview-tab active"
+                            id="previewTab"
+                            type="button"
+                        >
+                            Invoice Preview
+                        </button>
+
+                        <button
+                            class="preview-tab"
+                            id="textTab"
+                            type="button"
+                        >
+                            Extracted Text
+                        </button>
+
+                    </div>
+
+
+                    <!-- Document -->
+
+                    <div
+                        class="document-container"
+                        id="documentContainer"
+                    >
+
+                        <div class="document-placeholder">
+
+                            <div class="document-icon">
+                                ▤
+                            </div>
+
+                            <p>
+                                Loading document...
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Extracted Text -->
+
+                    <div
+                        class="extracted-text"
+                        id="extractedText"
+                    >
+                        No extracted text available yet.
+                    </div>
+
+                </section>
+
+
+                <!-- =============================================
+                     RIGHT INFORMATION
+                ============================================== -->
+
+                <div class="information-column">
+
+
+                    <!-- Invoice Information -->
+
+                    <section class="card">
+
+                        <div class="card-header">
+
+                            <h3>
+                                Invoice Information
+                            </h3>
+
+                        </div>
+
+
+                        <div class="info-list">
+
+                            <div class="info-row">
+
+                                <span>
+                                    Invoice Number
+                                </span>
+
+                                <strong id="infoInvoiceNumber">
+                                    -
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span>
+                                    Invoice Date
+                                </span>
+
+                                <strong id="invoiceDate">
+                                    -
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span>
+                                    Due Date
+                                </span>
+
+                                <strong id="dueDate">
+                                    -
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span>
+                                    Currency
+                                </span>
+
+                                <strong id="currency">
+                                    INR
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- Vendor Information -->
+
+                    <section class="card">
+
+                        <div class="card-header">
+
+                            <h3>
+                                Vendor Information
+                            </h3>
+
+                        </div>
+
+
+                        <div class="info-list">
+
+                            <div class="info-row">
+
+                                <span>
+                                    Vendor Name
+                                </span>
+
+                                <strong id="vendorName">
+                                    -
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span>
+                                    GSTIN
+                                </span>
+
+                                <strong id="vendorGSTIN">
+                                    -
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-row address-row">
+
+                                <span>
+                                    Billing Address
+                                </span>
+
+                                <strong id="billingAddress">
+                                    -
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-row address-row">
+
+                                <span>
+                                    Shipping Address
+                                </span>
+
+                                <strong id="shippingAddress">
+                                    -
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ITEMS
+            ================================================== -->
+
+            <section class="card items-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h3>
+                            Items
+                        </h3>
+
+                        <p>
+                            Invoice line items
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>#</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Tax</th>
+                                <th>Total</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="itemsTableBody">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div
+                    class="items-empty"
+                    id="itemsEmpty"
+                >
+                    No item information available yet.
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 BOTTOM GRID
+            ================================================== -->
+
+            <div class="bottom-grid">
+
+
+                <!-- Amount -->
+
+                <section class="card amount-card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            Amount Summary
+                        </h3>
+
+                    </div>
+
+
+                    <div class="amount-list">
+
+                        <div>
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <strong id="subtotal">
+                                ₹0.00
+                            </strong>
+                        </div>
+
+
+                        <div>
+                            <span>
+                                Tax
+                            </span>
+
+                            <strong id="tax">
+                                ₹0.00
+                            </strong>
+                        </div>
+
+
+                        <div class="total-row">
+
+                            <span>
+                                Total Amount
+                            </span>
+
+                            <strong id="total">
+                                ₹0.00
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- AI -->
+
+                <section class="card ai-card">
+
+                    <div class="ai-header">
+
+                        <div class="ai-icon">
+                            ✦
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                AI Insights
+                            </h3>
+
+                            <span>
+                                Coming Soon
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ai-placeholder">
+
+                        <p>
+                            AI-powered invoice analysis will appear here after Microsoft Foundry integration.
+                        </p>
+
+                        <div class="ai-features">
+
+                            <span>
+                                Document Understanding
+                            </span>
+
+                            <span>
+                                Invoice Analysis
+                            </span>
+
+                            <span>
+                                AI Search
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script src="js/invoice.js"></script>
+
+</body>
+
+</html>
