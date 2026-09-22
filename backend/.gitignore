@@ -4,3 +4,6 @@ node_modules/
 # keep the uploads folder in git, but not the files users upload into it
 uploads/*
 !uploads/.gitkeep
+
+# Uploaded invoice files
+backend/uploads/
