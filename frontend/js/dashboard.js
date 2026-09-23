@@ -30,21 +30,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const searchInput = document.getElementById("searchInput");
     const searchBtn = document.getElementById("searchBtn");
-    const suggestions = document.querySelectorAll(".suggestion");
+    const suggestions =
+        document.querySelectorAll(".suggestion");
 
-    const invoiceTable = document.getElementById("invoiceTable");
-    const tableBody = invoiceTable.querySelector("tbody");
-    const emptyState = document.getElementById("emptyState");
+    const invoiceTable =
+        document.getElementById("invoiceTable");
 
-    const assistantInput = document.getElementById("assistantInput");
-    const assistantSend = document.getElementById("assistantSend");
+    const tableBody =
+        invoiceTable.querySelector("tbody");
+
+    const emptyState =
+        document.getElementById("emptyState");
+
+    const assistantInput =
+        document.getElementById("assistantInput");
+
+    const assistantSend =
+        document.getElementById("assistantSend");
+
     const quickQuestions =
-        document.querySelectorAll(".quick-questions button");
+        document.querySelectorAll(
+            ".quick-questions button"
+        );
 
-    const logoutBtn = document.getElementById("logoutBtn");
-    const viewAllBtn = document.getElementById("viewAllBtn");
+    const logoutBtn =
+        document.getElementById("logoutBtn");
 
-    const userNameElement = document.querySelector(".user-name");
+    const viewAllBtn =
+        document.getElementById("viewAllBtn");
+
+    const userNameElement =
+        document.querySelector(".user-name");
 
 
     // =========================================================
@@ -60,7 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loadUserName() {
 
-        const storedUser = localStorage.getItem("invoxUser");
+        const storedUser =
+            localStorage.getItem("invoxUser");
 
         if (!storedUser) {
             return;
@@ -68,19 +85,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
 
-            const user = JSON.parse(storedUser);
+            const user =
+                JSON.parse(storedUser);
 
-            if (user.name && userNameElement) {
-                userNameElement.textContent = user.name;
+            if (
+                user.name &&
+                userNameElement
+            ) {
+
+                userNameElement.textContent =
+                    user.name;
+
             }
 
         } catch (error) {
 
-            console.error("Could not read stored user:", error);
+            console.error(
+                "Could not read stored user:",
+                error
+            );
 
         }
 
     }
+
 
     loadUserName();
 
@@ -93,43 +121,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
 
-            const response = await fetch(
-                `${API_BASE_URL}/invoices`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${token}`
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/invoices`,
+                    {
+                        method: "GET",
+
+                        headers: {
+                            "Authorization":
+                                `Bearer ${token}`
+                        }
                     }
-                }
-            );
+                );
 
 
             // If token is invalid/expired
             if (response.status === 401) {
 
-                localStorage.removeItem("invoxToken");
-                localStorage.removeItem("invoxUser");
+                localStorage.removeItem(
+                    "invoxToken"
+                );
 
-                window.location.href = "login.html";
+                localStorage.removeItem(
+                    "invoxUser"
+                );
+
+                window.location.href =
+                    "login.html";
 
                 return;
             }
 
 
-            const data = await response.json();
+            const data =
+                await response.json();
 
 
-            if (!response.ok || !data.success) {
+            if (
+                !response.ok ||
+                !data.success
+            ) {
 
                 throw new Error(
-                    data.message || "Failed to fetch invoices"
+                    data.message ||
+                    "Failed to fetch invoices"
                 );
 
             }
 
 
             // Save invoices
-            invoices = data.invoices || [];
+            invoices =
+                data.invoices || [];
 
 
             // Display everything
@@ -139,14 +182,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (error) {
 
-            console.error("Load invoices error:", error);
+            console.error(
+                "Load invoices error:",
+                error
+            );
 
             tableBody.innerHTML = "";
 
             emptyState.textContent =
                 "Could not load invoices. Please try again.";
 
-            emptyState.style.display = "block";
+            emptyState.style.display =
+                "block";
 
         }
 
@@ -157,97 +204,118 @@ document.addEventListener("DOMContentLoaded", () => {
     // UPDATE DASHBOARD STATISTICS
     // =========================================================
 
-   function updateDashboardStats() {
+    function updateDashboardStats() {
 
-    // -----------------------------------------
-    // TOTAL INVOICES
-    // -----------------------------------------
+        // -----------------------------------------
+        // TOTAL INVOICES
+        // -----------------------------------------
 
-    const totalInvoices = invoices.length;
-
-
-    // -----------------------------------------
-    // THIS MONTH
-    // -----------------------------------------
-
-    const now = new Date();
-
-    const currentMonth = now.getMonth();
-    const currentYear = now.getFullYear();
-
-    const thisMonthInvoices = invoices.filter(invoice => {
-
-        if (!invoice.createdAt) {
-            return false;
-        }
-
-        const date = new Date(invoice.createdAt);
-
-        return (
-            date.getMonth() === currentMonth &&
-            date.getFullYear() === currentYear
-        );
-
-    });
+        const totalInvoices =
+            invoices.length;
 
 
-    // -----------------------------------------
-    // TOTAL AMOUNT
-    // -----------------------------------------
+        // -----------------------------------------
+        // THIS MONTH
+        // -----------------------------------------
 
-    const totalAmount = invoices.reduce(
-        (sum, invoice) => {
+        const now = new Date();
 
-            const amount =
-                Number(invoice.total) || 0;
+        const currentMonth =
+            now.getMonth();
 
-            return sum + amount;
-
-        },
-        0
-    );
+        const currentYear =
+            now.getFullYear();
 
 
-    // -----------------------------------------
-    // UPDATE HTML
-    // -----------------------------------------
+        const thisMonthInvoices =
+            invoices.filter(invoice => {
 
-    const statCards =
-        document.querySelectorAll(".stat-card");
+                if (!invoice.createdAt) {
+                    return false;
+                }
 
-    if (statCards.length >= 3) {
+                const date =
+                    new Date(invoice.createdAt);
 
-        // Total invoices
-        const totalValue =
-            statCards[0].querySelector("strong");
+                return (
+                    date.getMonth() === currentMonth &&
+                    date.getFullYear() === currentYear
+                );
 
-        if (totalValue) {
-            totalValue.textContent = totalInvoices;
-        }
-
-
-        // This month
-        const monthValue =
-            statCards[1].querySelector("strong");
-
-        if (monthValue) {
-            monthValue.textContent =
-                thisMonthInvoices.length;
-        }
+            });
 
 
-        // Total amount
-        const amountValue =
-            statCards[2].querySelector("strong");
+        // -----------------------------------------
+        // TOTAL AMOUNT
+        // -----------------------------------------
 
-        if (amountValue) {
-            amountValue.textContent =
-                formatCurrency(totalAmount);
+        const totalAmount =
+            invoices.reduce(
+                (sum, invoice) => {
+
+                    const amount =
+                        Number(invoice.total) || 0;
+
+                    return sum + amount;
+
+                },
+                0
+            );
+
+
+        // -----------------------------------------
+        // UPDATE HTML
+        // -----------------------------------------
+
+        const statCards =
+            document.querySelectorAll(
+                ".stat-card"
+            );
+
+
+        if (statCards.length >= 3) {
+
+            // Total invoices
+            const totalValue =
+                statCards[0]
+                    .querySelector("strong");
+
+            if (totalValue) {
+
+                totalValue.textContent =
+                    totalInvoices;
+
+            }
+
+
+            // This month
+            const monthValue =
+                statCards[1]
+                    .querySelector("strong");
+
+            if (monthValue) {
+
+                monthValue.textContent =
+                    thisMonthInvoices.length;
+
+            }
+
+
+            // Total amount
+            const amountValue =
+                statCards[2]
+                    .querySelector("strong");
+
+            if (amountValue) {
+
+                amountValue.textContent =
+                    formatCurrency(totalAmount);
+
+            }
+
         }
 
     }
-
-}
 
 
     // =========================================================
@@ -283,14 +351,16 @@ document.addEventListener("DOMContentLoaded", () => {
             emptyState.textContent =
                 "No invoices found.";
 
-            emptyState.style.display = "block";
+            emptyState.style.display =
+                "block";
 
             return;
 
         }
 
 
-        emptyState.style.display = "none";
+        emptyState.style.display =
+            "none";
 
 
         invoiceList.forEach(invoice => {
@@ -323,8 +393,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const date =
                 invoice.invoiceDate
-                    ? formatDate(invoice.invoiceDate)
-                    : formatDate(invoice.createdAt);
+                    ? formatDate(
+                        invoice.invoiceDate
+                    )
+                    : formatDate(
+                        invoice.createdAt
+                    );
 
 
             // -----------------------------------------
@@ -353,13 +427,21 @@ document.addEventListener("DOMContentLoaded", () => {
             // -----------------------------------------
 
             row.innerHTML = `
-                <td>${escapeHTML(invoiceNumber)}</td>
+                <td>
+                    ${escapeHTML(invoiceNumber)}
+                </td>
 
-                <td>${escapeHTML(vendorName)}</td>
+                <td>
+                    ${escapeHTML(vendorName)}
+                </td>
 
-                <td>${date}</td>
+                <td>
+                    ${date}
+                </td>
 
-                <td>${formatCurrency(total)}</td>
+                <td>
+                    ${formatCurrency(total)}
+                </td>
 
                 <td>
                     <span class="status ${status}">
@@ -386,19 +468,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Add View button listeners
         const moreButtons =
-            tableBody.querySelectorAll(".more-btn");
+            tableBody.querySelectorAll(
+                ".more-btn"
+            );
 
 
         moreButtons.forEach(button => {
 
-            button.addEventListener("click", () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                const invoiceId =
-                    button.dataset.id;
+                    const invoiceId =
+                        button.dataset.id;
 
-                openInvoice(invoiceId);
+                    openInvoice(invoiceId);
 
-            });
+                }
+            );
 
         });
 
@@ -415,12 +502,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return "-";
         }
 
+
         const date =
             new Date(dateValue);
+
 
         if (isNaN(date.getTime())) {
             return "-";
         }
+
 
         return date.toLocaleDateString(
             "en-IN",
@@ -472,7 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Send invoice ID to invoice page
+
         window.location.href =
             `invoice.html?id=${invoiceId}`;
 
@@ -481,7 +571,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // =========================================================
     // ESCAPE HTML
-    // Prevents invoice data from being inserted as HTML
     // =========================================================
 
     function escapeHTML(value) {
@@ -495,318 +584,322 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-// =========================================================
-// FILE UPLOAD
-// =========================================================
 
-let selectedInvoiceFile = null;
+    // =========================================================
+    // FILE UPLOAD
+    // =========================================================
 
-
-// Open file picker
-uploadBtn.addEventListener("click", () => {
-
-    // If a file has already been selected,
-    // upload it instead of opening the picker.
-    if (selectedInvoiceFile) {
-        uploadInvoice();
-        return;
-    }
-
-    fileInput.click();
-
-});
+    let selectedInvoiceFile = null;
 
 
-// File selected normally
-fileInput.addEventListener("change", () => {
+    uploadBtn.addEventListener(
+        "click",
+        () => {
 
-    if (fileInput.files.length > 0) {
+            if (selectedInvoiceFile) {
 
-        const file = fileInput.files[0];
+                uploadInvoice();
 
-        if (isValidInvoiceFile(file)) {
+                return;
 
-            selectedInvoiceFile = file;
+            }
 
-            showSelectedFile(file);
-
-        } else {
-
-            showUploadError();
-
-        }
-
-    }
-
-});
-
-
-// =========================================================
-// DRAG & DROP
-// =========================================================
-
-["dragenter", "dragover"].forEach(eventName => {
-
-    dropZone.addEventListener(
-        eventName,
-        event => {
-
-            event.preventDefault();
-
-            dropZone.classList.add("dragover");
+            fileInput.click();
 
         }
     );
 
-});
+
+    fileInput.addEventListener(
+        "change",
+        () => {
+
+            if (fileInput.files.length > 0) {
+
+                const file =
+                    fileInput.files[0];
 
 
-["dragleave", "drop"].forEach(eventName => {
+                if (isValidInvoiceFile(file)) {
 
-    dropZone.addEventListener(
-        eventName,
-        event => {
+                    selectedInvoiceFile =
+                        file;
 
-            event.preventDefault();
+                    showSelectedFile(file);
 
-            dropZone.classList.remove("dragover");
+                } else {
+
+                    showUploadError();
+
+                }
+
+            }
 
         }
     );
 
-});
 
+    // =========================================================
+    // DRAG & DROP
+    // =========================================================
 
-dropZone.addEventListener(
-    "drop",
-    event => {
+    ["dragenter", "dragover"]
+        .forEach(eventName => {
 
-        const files =
-            event.dataTransfer.files;
+            dropZone.addEventListener(
+                eventName,
+                event => {
 
-        if (files.length === 0) {
-            return;
-        }
+                    event.preventDefault();
 
+                    dropZone.classList.add(
+                        "dragover"
+                    );
 
-        const file = files[0];
-
-
-        if (isValidInvoiceFile(file)) {
-
-            selectedInvoiceFile = file;
-
-            showSelectedFile(file);
-
-        } else {
-
-            showUploadError();
-
-        }
-
-    }
-);
-
-
-// =========================================================
-// VALIDATE FILE
-// =========================================================
-
-function isValidInvoiceFile(file) {
-
-    const allowedTypes = [
-        "application/pdf",
-        "image/png",
-        "image/jpeg"
-    ];
-
-    return allowedTypes.includes(file.type);
-
-}
-
-
-// =========================================================
-// SHOW SELECTED FILE
-// =========================================================
-
-function showSelectedFile(file) {
-
-    selectedFile.style.color = "";
-
-    selectedFile.textContent =
-        `Selected: ${file.name}`;
-
-    // Change button text so user knows
-    // clicking it will upload the invoice.
-    uploadBtn.textContent =
-        "Upload Invoice";
-
-}
-
-
-// =========================================================
-// INVALID FILE
-// =========================================================
-
-function showUploadError() {
-
-    selectedInvoiceFile = null;
-
-    selectedFile.textContent =
-        "Please choose a PDF, PNG, JPG or JPEG file.";
-
-    selectedFile.style.color =
-        "#ff8b8b";
-
-}
-
-
-// =========================================================
-// UPLOAD INVOICE TO BACKEND
-// =========================================================
-
-async function uploadInvoice() {
-
-    if (!selectedInvoiceFile) {
-        return;
-    }
-
-
-    // Disable button while uploading
-    uploadBtn.disabled = true;
-
-    uploadBtn.textContent =
-        "Uploading...";
-
-
-    try {
-
-        const formData =
-            new FormData();
-
-        formData.append(
-            "invoice",
-            selectedInvoiceFile
-        );
-
-
-        const response =
-            await fetch(
-                `${API_BASE_URL}/invoices/upload`,
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Authorization":
-                            `Bearer ${token}`
-                    },
-
-                    body: formData
                 }
             );
 
+        });
 
-        // -------------------------------------------------
-        // Token expired / invalid
-        // -------------------------------------------------
 
-        if (response.status === 401) {
+    ["dragleave", "drop"]
+        .forEach(eventName => {
 
-            localStorage.removeItem(
-                "invoxToken"
+            dropZone.addEventListener(
+                eventName,
+                event => {
+
+                    event.preventDefault();
+
+                    dropZone.classList.remove(
+                        "dragover"
+                    );
+
+                }
             );
 
-            localStorage.removeItem(
-                "invoxUser"
-            );
+        });
 
-            window.location.href =
-                "login.html";
 
-            return;
+    dropZone.addEventListener(
+        "drop",
+        event => {
+
+            const files =
+                event.dataTransfer.files;
+
+
+            if (files.length === 0) {
+                return;
+            }
+
+
+            const file =
+                files[0];
+
+
+            if (isValidInvoiceFile(file)) {
+
+                selectedInvoiceFile =
+                    file;
+
+                showSelectedFile(file);
+
+            } else {
+
+                showUploadError();
+
+            }
 
         }
+    );
 
 
-        const data =
-            await response.json();
+    // =========================================================
+    // VALIDATE FILE
+    // =========================================================
+
+    function isValidInvoiceFile(file) {
+
+        const allowedTypes = [
+            "application/pdf",
+            "image/png",
+            "image/jpeg"
+        ];
 
 
-        // -------------------------------------------------
-        // Upload failed
-        // -------------------------------------------------
+        return allowedTypes.includes(
+            file.type
+        );
 
-        if (
-            !response.ok ||
-            !data.success
-        ) {
-
-            throw new Error(
-                data.message ||
-                "Invoice upload failed."
-            );
-
-        }
+    }
 
 
-        // -------------------------------------------------
-        // Upload successful
-        // -------------------------------------------------
+    // =========================================================
+    // SHOW SELECTED FILE
+    // =========================================================
+
+    function showSelectedFile(file) {
+
+        selectedFile.style.color = "";
 
         selectedFile.textContent =
-            "Invoice uploaded successfully!";
-
-        selectedFile.style.color =
-            "#25d995";
-
-
-        // Reset selected file
-        selectedInvoiceFile = null;
-
-        fileInput.value = "";
-
+            `Selected: ${file.name}`;
 
         uploadBtn.textContent =
             "Upload Invoice";
 
-
-        // Reload invoices from MongoDB
-        await loadInvoices();
+    }
 
 
-    } catch (error) {
+    // =========================================================
+    // INVALID FILE
+    // =========================================================
 
-        console.error(
-            "Invoice upload error:",
-            error
-        );
+    function showUploadError() {
 
+        selectedInvoiceFile = null;
 
         selectedFile.textContent =
-            error.message ||
-            "Could not upload invoice.";
+            "Please choose a PDF, PNG, JPG or JPEG file.";
 
         selectedFile.style.color =
             "#ff8b8b";
 
-
-    } finally {
-
-        uploadBtn.disabled = false;
+    }
 
 
-        // If upload succeeded, button goes
-        // back to normal file-picker behavior.
+    // =========================================================
+    // UPLOAD INVOICE TO BACKEND
+    // =========================================================
+
+    async function uploadInvoice() {
+
         if (!selectedInvoiceFile) {
+            return;
+        }
+
+
+        uploadBtn.disabled = true;
+
+        uploadBtn.textContent =
+            "Uploading...";
+
+
+        try {
+
+            const formData =
+                new FormData();
+
+
+            formData.append(
+                "invoice",
+                selectedInvoiceFile
+            );
+
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/invoices/upload`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Authorization":
+                                `Bearer ${token}`
+                        },
+
+                        body: formData
+                    }
+                );
+
+
+            if (response.status === 401) {
+
+                localStorage.removeItem(
+                    "invoxToken"
+                );
+
+                localStorage.removeItem(
+                    "invoxUser"
+                );
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.message ||
+                    "Invoice upload failed."
+                );
+
+            }
+
+
+            selectedFile.textContent =
+                "Invoice uploaded successfully!";
+
+            selectedFile.style.color =
+                "#25d995";
+
+
+            selectedInvoiceFile = null;
+
+            fileInput.value = "";
+
 
             uploadBtn.textContent =
                 "Upload Invoice";
+
+
+            await loadInvoices();
+
+
+        } catch (error) {
+
+            console.error(
+                "Invoice upload error:",
+                error
+            );
+
+
+            selectedFile.textContent =
+                error.message ||
+                "Could not upload invoice.";
+
+            selectedFile.style.color =
+                "#ff8b8b";
+
+
+        } finally {
+
+            uploadBtn.disabled = false;
+
+
+            if (!selectedInvoiceFile) {
+
+                uploadBtn.textContent =
+                    "Upload Invoice";
+
+            }
 
         }
 
     }
 
-}
 
     // =========================================================
     // INVOICE SEARCH
@@ -844,10 +937,21 @@ async function uploadInvoice() {
 
 
                 return (
-                    invoiceNumber.toLowerCase().includes(text) ||
-                    vendorName.toLowerCase().includes(text) ||
-                    vendorGSTIN.toLowerCase().includes(text) ||
-                    fileName.toLowerCase().includes(text)
+                    invoiceNumber
+                        .toLowerCase()
+                        .includes(text) ||
+
+                    vendorName
+                        .toLowerCase()
+                        .includes(text) ||
+
+                    vendorGSTIN
+                        .toLowerCase()
+                        .includes(text) ||
+
+                    fileName
+                        .toLowerCase()
+                        .includes(text)
                 );
 
             });
@@ -902,7 +1006,7 @@ async function uploadInvoice() {
 
 
     // =========================================================
-    // AI ASSISTANT UI
+    // AI ASSISTANT
     // =========================================================
 
     quickQuestions.forEach(button => {
@@ -924,7 +1028,11 @@ async function uploadInvoice() {
     });
 
 
-    function submitAssistantQuestion() {
+    // =========================================================
+    // SUBMIT ASSISTANT QUESTION
+    // =========================================================
+
+    async function submitAssistantQuestion() {
 
         const question =
             assistantInput.value.trim();
@@ -935,19 +1043,192 @@ async function uploadInvoice() {
         }
 
 
-        // Microsoft Foundry Agent
-        // will be connected later.
-
-        assistantInput.value = "";
-
-
-        alert(
-            "AI Assistant is ready in the UI. " +
-            "Microsoft Foundry integration will be connected later."
+        console.log(
+            "Sending assistant question:",
+            question
         );
+
+
+        assistantInput.disabled = true;
+        assistantSend.disabled = true;
+
+        assistantInput.placeholder =
+            "InvoX AI is thinking...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/assistant/ask`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                `Bearer ${token}`
+                        },
+
+                        body: JSON.stringify({
+                            question: question
+                        })
+                    }
+                );
+
+
+            console.log(
+                "Assistant HTTP status:",
+                response.status
+            );
+
+
+            if (response.status === 401) {
+
+                localStorage.removeItem(
+                    "invoxToken"
+                );
+
+                localStorage.removeItem(
+                    "invoxUser"
+                );
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            console.log(
+                "Assistant response:",
+                data
+            );
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.message ||
+                    "AI assistant request failed."
+                );
+
+            }
+
+
+            displayAssistantResponse(
+                data.answer
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Assistant error:",
+                error
+            );
+
+
+            displayAssistantResponse(
+                "Sorry, I couldn't process your question right now."
+            );
+
+
+        } finally {
+
+            assistantInput.disabled = false;
+            assistantSend.disabled = false;
+
+            assistantInput.placeholder =
+                "Type your question...";
+
+            assistantInput.value = "";
+
+            assistantInput.focus();
+
+        }
 
     }
 
+
+    // =========================================================
+    // DISPLAY ASSISTANT RESPONSE
+    // =========================================================
+
+    function displayAssistantResponse(answer) {
+
+        const assistantPanel =
+            document.getElementById("assistant");
+
+
+        if (!assistantPanel) {
+            return;
+        }
+
+
+        // Remove previous response
+        const oldResponse =
+            assistantPanel.querySelector(
+                ".assistant-response"
+            );
+
+
+        if (oldResponse) {
+            oldResponse.remove();
+        }
+
+
+        const responseElement =
+            document.createElement("div");
+
+
+        responseElement.className =
+            "assistant-response";
+
+
+        // textContent keeps the AI response safe
+        responseElement.textContent =
+            answer;
+
+
+        // Insert response before input
+        const inputArea =
+            assistantPanel.querySelector(
+                ".assistant-input"
+            );
+
+
+        if (inputArea) {
+
+            assistantPanel.insertBefore(
+                responseElement,
+                inputArea
+            );
+
+        } else {
+
+            assistantPanel.appendChild(
+                responseElement
+            );
+
+        }
+
+    }
+
+
+    // =========================================================
+    // ASSISTANT SEND BUTTON
+    // =========================================================
 
     assistantSend.addEventListener(
         "click",
@@ -955,11 +1236,17 @@ async function uploadInvoice() {
     );
 
 
+    // =========================================================
+    // ASSISTANT ENTER KEY
+    // =========================================================
+
     assistantInput.addEventListener(
         "keydown",
         event => {
 
             if (event.key === "Enter") {
+
+                event.preventDefault();
 
                 submitAssistantQuestion();
 

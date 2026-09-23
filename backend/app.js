@@ -7,15 +7,12 @@
 // =========================================================
 
 const express = require("express");
-
 const cors = require("cors");
-
 const path = require("path");
 
 const authRoutes = require("./routes/authRoutes");
-
 const invoiceRoutes = require("./routes/invoiceRoutes");
-
+const assistantRoutes = require("./routes/assistantRoutes");
 
 const app = express();
 
@@ -84,6 +81,11 @@ app.use(
 app.use(
     "/api/invoices",
     invoiceRoutes
+);
+
+app.use(
+    "/api/assistant",
+    assistantRoutes
 );
 
 
