@@ -1,8 +1,10 @@
+import os
+
 from pymongo import MongoClient
 from bson import ObjectId
 
 
-MONGO_URI = "mongodb://127.0.0.1:27017"
+MONGO_URI = os.getenv("MONGODB_URI")
 DB_NAME = "invox-ai"
 
 
@@ -12,6 +14,11 @@ def search_invoices(
     max_amount=None,
     user_id=None
 ):
+    if not MONGO_URI:
+        raise RuntimeError(
+            "MONGODB_URI environment variable is not set"
+        )
+
     client = MongoClient(MONGO_URI)
 
     try:
