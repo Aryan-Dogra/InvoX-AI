@@ -12,14 +12,40 @@ async function askAssistant(req, res) {
             });
         }
 
+        // --------------------------------------------------
+        // Project root
+        // --------------------------------------------------
+
         const projectRoot = path.join(__dirname, "../..");
 
-        const pythonPath = path.join(
-            projectRoot,
-            ".venv",
-            "Scripts",
-            "python.exe"
-        );
+        // --------------------------------------------------
+        // Python executable
+        //
+        // Local Windows:
+        // .venv\Scripts\python.exe
+        //
+        // Render/Linux:
+        // python3
+        //
+        // PYTHON_EXECUTABLE can override both if needed.
+        // --------------------------------------------------
+
+        const pythonPath =
+            process.env.PYTHON_EXECUTABLE ||
+            (
+                process.platform === "win32"
+                    ? path.join(
+                        projectRoot,
+                        ".venv",
+                        "Scripts",
+                        "python.exe"
+                    )
+                    : "python3"
+            );
+
+        // --------------------------------------------------
+        // Python agent script
+        // --------------------------------------------------
 
         const scriptPath = path.join(
             projectRoot,
@@ -27,10 +53,18 @@ async function askAssistant(req, res) {
             "search_agent_runtime.py"
         );
 
+        // --------------------------------------------------
+        // Logged-in user's ID
+        // --------------------------------------------------
+
         const userId =
             req.user?.id ||
             req.user?._id ||
             "";
+
+        // --------------------------------------------------
+        // Start Python agent
+        // --------------------------------------------------
 
         const pythonProcess = spawn(
             pythonPath,
@@ -41,19 +75,32 @@ async function askAssistant(req, res) {
             ],
             {
                 cwd: projectRoot,
+                env: process.env,
             }
         );
 
         let output = "";
         let errorOutput = "";
 
+        // --------------------------------------------------
+        // Python standard output
+        // --------------------------------------------------
+
         pythonProcess.stdout.on("data", (data) => {
             output += data.toString();
         });
 
+        // --------------------------------------------------
+        // Python error output
+        // --------------------------------------------------
+
         pythonProcess.stderr.on("data", (data) => {
             errorOutput += data.toString();
         });
+
+        // --------------------------------------------------
+        // Failed to start Python
+        // --------------------------------------------------
 
         pythonProcess.on("error", (error) => {
             console.error(
@@ -66,6 +113,10 @@ async function askAssistant(req, res) {
                 message: "Failed to start AI assistant",
             });
         });
+
+        // --------------------------------------------------
+        // Python process finished
+        // --------------------------------------------------
 
         pythonProcess.on("close", (code) => {
 
@@ -82,6 +133,10 @@ async function askAssistant(req, res) {
                         "AI assistant failed to process the question",
                 });
             }
+
+            // --------------------------------------------------
+            // Parse Python JSON response
+            // --------------------------------------------------
 
             try {
 
