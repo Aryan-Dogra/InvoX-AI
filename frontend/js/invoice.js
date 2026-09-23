@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // CONFIG
     // =========================================================
 
-    const API_BASE_URL = "http://localhost:5000/api";
+    const API_BASE_URL = "https://invox-ai-backend.onrender.com/api";
 
-    const SERVER_BASE_URL = "http://localhost:5000";
+    const SERVER_BASE_URL = "https://invox-ai-backend.onrender.com";
 
 
     // =========================================================

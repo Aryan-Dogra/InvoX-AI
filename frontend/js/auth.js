@@ -4,7 +4,7 @@
 // Connected to Node/Express backend
 // =========================================================
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://invox-ai-backend.onrender.com/api";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
