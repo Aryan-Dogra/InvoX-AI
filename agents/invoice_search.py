@@ -5,7 +5,7 @@ from bson import ObjectId
 
 
 MONGO_URI = os.getenv("MONGODB_URI")
-DB_NAME = "invox-ai"
+DB_NAME = "test"
 
 
 def search_invoices(
@@ -24,29 +24,6 @@ def search_invoices(
     try:
         db = client[DB_NAME]
         invoices = db["invoices"]
-
-        # Temporary debugging
-        print(
-            "Python MongoDB database:",
-            db.name
-        )
-
-        print(
-            "Python invoice count:",
-            invoices.count_documents({})
-        )
-
-        print(
-            "Python invoice sample:",
-            invoices.find_one(
-                {},
-                {
-                    "vendorName": 1,
-                    "userId": 1,
-                    "invoiceNumber": 1
-                }
-            )
-        )
 
         query = {}
 
