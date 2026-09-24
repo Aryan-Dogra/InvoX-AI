@@ -124,7 +124,7 @@ async function askAssistant(req, res) {
 
                 console.error(
                     "Python agent error:",
-                    errorOutput
+                    errorOutput || output || "No error output received"
                 );
 
                 return res.status(500).json({
