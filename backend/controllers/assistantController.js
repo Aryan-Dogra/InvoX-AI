@@ -12,23 +12,7 @@ async function askAssistant(req, res) {
             });
         }
 
-        // --------------------------------------------------
-        // Project root
-        // --------------------------------------------------
-
         const projectRoot = path.join(__dirname, "../..");
-
-        // --------------------------------------------------
-        // Python executable
-        //
-        // Local Windows:
-        // .venv\Scripts\python.exe
-        //
-        // Render/Linux:
-        // python3
-        //
-        // PYTHON_EXECUTABLE can override both if needed.
-        // --------------------------------------------------
 
         const pythonPath =
             process.env.PYTHON_EXECUTABLE ||
@@ -43,28 +27,18 @@ async function askAssistant(req, res) {
                     : "python3"
             );
 
-        // --------------------------------------------------
-        // Python agent script
-        // --------------------------------------------------
-
         const scriptPath = path.join(
             projectRoot,
             "agents",
             "search_agent_runtime.py"
         );
 
-        // --------------------------------------------------
-        // Logged-in user's ID
-        // --------------------------------------------------
+        const userId = req.userId || "";
 
-        const userId =
-            req.user?.id ||
-            req.user?._id ||
-            "";
-
-        // --------------------------------------------------
-        // Start Python agent
-        // --------------------------------------------------
+        console.log("Starting Python AI agent...");
+        console.log("Python path:", pythonPath);
+        console.log("Script path:", scriptPath);
+        console.log("User ID:", userId);
 
         const pythonProcess = spawn(
             pythonPath,
@@ -82,25 +56,21 @@ async function askAssistant(req, res) {
         let output = "";
         let errorOutput = "";
 
-        // --------------------------------------------------
-        // Python standard output
-        // --------------------------------------------------
-
         pythonProcess.stdout.on("data", (data) => {
-            output += data.toString();
-        });
+            const text = data.toString();
 
-        // --------------------------------------------------
-        // Python error output
-        // --------------------------------------------------
+            console.log("Python stdout:", text);
+
+            output += text;
+        });
 
         pythonProcess.stderr.on("data", (data) => {
-            errorOutput += data.toString();
-        });
+            const text = data.toString();
 
-        // --------------------------------------------------
-        // Failed to start Python
-        // --------------------------------------------------
+            console.error("Python stderr:", text);
+
+            errorOutput += text;
+        });
 
         pythonProcess.on("error", (error) => {
             console.error(
@@ -114,17 +84,26 @@ async function askAssistant(req, res) {
             });
         });
 
-        // --------------------------------------------------
-        // Python process finished
-        // --------------------------------------------------
+        pythonProcess.on("close", (code, signal) => {
 
-        pythonProcess.on("close", (code) => {
+            console.log(
+                "Python process closed.",
+                {
+                    code,
+                    signal,
+                }
+            );
 
             if (code !== 0) {
 
                 console.error(
-                    "Python agent error:",
-                    errorOutput || output || "No error output received"
+                    "Python agent failed.",
+                    {
+                        code,
+                        signal,
+                        stdout: output,
+                        stderr: errorOutput,
+                    }
                 );
 
                 return res.status(500).json({
@@ -133,10 +112,6 @@ async function askAssistant(req, res) {
                         "AI assistant failed to process the question",
                 });
             }
-
-            // --------------------------------------------------
-            // Parse Python JSON response
-            // --------------------------------------------------
 
             try {
 
