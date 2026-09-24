@@ -25,6 +25,29 @@ def search_invoices(
         db = client[DB_NAME]
         invoices = db["invoices"]
 
+        # Temporary debugging
+        print(
+            "Python MongoDB database:",
+            db.name
+        )
+
+        print(
+            "Python invoice count:",
+            invoices.count_documents({})
+        )
+
+        print(
+            "Python invoice sample:",
+            invoices.find_one(
+                {},
+                {
+                    "vendorName": 1,
+                    "userId": 1,
+                    "invoiceNumber": 1
+                }
+            )
+        )
+
         query = {}
 
         # --------------------------------------------------
@@ -108,7 +131,9 @@ if __name__ == "__main__":
         vendor="Acme"
     )
 
-    print(f"Found {len(results)} invoice(s)")
+    print(
+        f"Found {len(results)} invoice(s)"
+    )
 
     for invoice in results:
         print(invoice)
